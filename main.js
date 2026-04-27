@@ -187,13 +187,13 @@ function render(span_list) {
 	first.innerHTML = "";
 	second.innerHTML = "";
 	third.innerHTML = "";
-	if (span_list.length === 3) {
+	if (span_list[0]) {
 		temp(first, span_list[0]);
 		temp(second, span_list[1]);
 		temp(third, span_list[2]);
 	} else {
-		temp(second, span_list[0]);
-		temp(third, span_list[1]);
+		temp(second, span_list[1]);
+		temp(third, span_list[2]);
 	}
 }
 
@@ -239,7 +239,7 @@ function start_typing() {
 		another_stack = new stack();
 	left = total.flat().join(" ").length;
 	let index = 0,
-		line_index = 0;
+		line_index = 1;
 	/**
 	 * @type {HTMLSpanElement[][]}
 	 */
@@ -254,12 +254,12 @@ function start_typing() {
 		span_list_after = [];
 	load(total, 0, span_list, true);
 	load(total, 1, span_list, true);
+	span_list.splice(0, 0, []);
 	for (let i = 2; i < total.length; i++) {
 		const temp = [];
 		load(total, i, temp, true);
 		span_list_after.push(temp[0]);
 	}
-	log(span_list_after);
 	render(span_list);
 	body.addEventListener("keydown", (e) => {
 		if (
@@ -270,10 +270,10 @@ function start_typing() {
 		if (e.key === "Backspace") {
 			index--;
 			if (index < 0) {
-				if (line_index > 0) {
+				if (line_index > 1) {
 					index = span_list[--line_index].length - 1;
 					span_list[2] = span_list[1];
-					if (span_list.length === 3) {
+					if (span_list[0]) {
 						span_list[1] = span_list[0];
 					}
 					span_list[0] = span_list_before.at(-1);
