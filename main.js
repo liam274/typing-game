@@ -243,9 +243,22 @@ function start_typing() {
 	/**
 	 * @type {HTMLSpanElement[][]}
 	 */
-	const span_list = [];
+	const span_list = [],
+		/**
+		 * @type {HTMLSpanElement[][]}
+		 */
+		span_list_before = [],
+		/**
+		 * @type {HTMLSpanElement[][]}
+		 */
+		span_list_after = [];
 	load(total, 0, span_list, true);
-	load(total, line_index + 1, span_list, true);
+	load(total, 1, span_list, true);
+	for (let i = 2; i < total.length; i++) {
+		const temp = [];
+		load(total, i, temp, true);
+		span_list_after.push(temp[0]);
+	}
 	render(span_list);
 	body.addEventListener("keydown", (e) => {
 		if (
@@ -258,7 +271,9 @@ function start_typing() {
 			if (index < 0) {
 				if (line_index > 0) {
 					index = span_list[--line_index].length - 1;
-					load(total, line_index, span_list, false);
+					span_list_before.push(...span_list[0]);
+					span_list[0] = span_list_after[0];
+					span_list_after.splice(0, 1);
 					render(span_list);
 				} else {
 					index = 0;
@@ -287,15 +302,21 @@ function start_typing() {
 				el.classList.add("right");
 			} else {
 				log("Wrong!", word_stack.top());
+				wrong++;
 				el.classList.add("wrong");
 			}
+			left--;
 			another_stack.push(word_stack.top());
 			word_stack.pop();
 			index++;
 			if (index === span_list[line_index].length) {
 				line_index++;
+				span_list_before.push(...span_list[0]);
+				span_list[0] = span_list[1];
+				span_list[1] = span_list[2];
+				span_list[2] = span_list_after[0];
+				span_list_after.splice(0, 1);
 				index = 0;
-				load(total, line_index + 1, span_list, true);
 				render(span_list);
 			}
 		}
