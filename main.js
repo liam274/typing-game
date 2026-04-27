@@ -233,7 +233,9 @@ let correct = 0,
 	left = 0;
 function start_typing() {
 	const total = [...split2lines(random_choose(texts))],
-		word_stack = new stack(Array.from(total.flat().join(" ")).toReversed()),
+		word_stack = new stack(
+			Array.from(total.flat().join(" ")).toReversed()
+		),
 		another_stack = new stack();
 	left = total.flat().join(" ").length;
 	let index = 0,
