@@ -259,6 +259,7 @@ function start_typing() {
 		load(total, i, temp, true);
 		span_list_after.push(temp[0]);
 	}
+	log(span_list_after);
 	render(span_list);
 	body.addEventListener("keydown", (e) => {
 		if (
@@ -271,9 +272,14 @@ function start_typing() {
 			if (index < 0) {
 				if (line_index > 0) {
 					index = span_list[--line_index].length - 1;
-					span_list_before.push(...span_list[0]);
-					span_list[0] = span_list_after[0];
-					span_list_after.splice(0, 1);
+					span_list[2] = span_list[1];
+					if (span_list.length === 3) {
+						span_list[1] = span_list[0];
+					}
+					span_list[0] = span_list_before.at(-1);
+					span_list_before.pop();
+					span_list_after.push(span_list[2]);
+					span_list.splice(0, 1);
 					render(span_list);
 				} else {
 					index = 0;
@@ -311,7 +317,9 @@ function start_typing() {
 			index++;
 			if (index === span_list[line_index].length) {
 				line_index++;
-				span_list_before.push(...span_list[0]);
+				if (span_list.length === 3) {
+					span_list_before.push(span_list[0]);
+				}
 				span_list[0] = span_list[1];
 				span_list[1] = span_list[2];
 				span_list[2] = span_list_after[0];
