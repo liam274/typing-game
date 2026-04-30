@@ -1,0 +1,8 @@
+body {
+	height: 100vh;
+	gap: 15px;
+	background-color: #272525;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+}
