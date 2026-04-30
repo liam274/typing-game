@@ -13,6 +13,7 @@ body {
 	box-sizing: border-box;
 	transition: all 0.1s ease-in-out;
 	font-family: "JetBrains Mono", monospace;
+	user-select: none;
 }
 
 svg {
@@ -22,6 +23,10 @@ svg {
 
 :active {
 	scale: 0.9;
+}
+
+:focus {
+	outline: none;
 }
 
 #app {
@@ -38,14 +43,16 @@ svg {
 	justify-content: space-between;
 	width: 100%;
 }
-#toolbar:first-child {
+#toolbar > :first-child {
 	display: flex;
 	justify-content: center;
 	width: 60%;
+	gap: 45px;
 }
-#toolbar:last-child {
+#toolbar > :last-child {
 	display: flex;
 	justify-content: flex-end;
 	gap: 1rem;
 	width: auto;
+	padding-right: 90px;
 }
