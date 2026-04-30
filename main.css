@@ -21,7 +21,8 @@ svg {
 	cursor: pointer;
 }
 
-:active {
+button:active,
+svg:active {
 	scale: 0.9;
 }
 
