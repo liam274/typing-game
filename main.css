@@ -36,12 +36,16 @@ svg {
 #toolbar {
 	display: flex;
 	justify-content: space-between;
+	width: 100%;
 }
-#toolbar:nth-child(0) {
+#toolbar:first-child {
 	display: flex;
+	justify-content: center;
+	width: 60%;
 }
-#toolbar:nth-last-child {
+#toolbar:last-child {
 	display: flex;
 	justify-content: flex-end;
 	gap: 1rem;
+	width: auto;
 }
